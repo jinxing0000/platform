@@ -1,0 +1,21 @@
+server:
+  port: 8082
+spring:
+  dubbo:
+     application:
+        id:
+           sys-consumer
+        name:
+           sys-consumer
+     registry:
+        address:
+            zookeeper://127.0.0.1:2181
+     protocol:
+        name:
+           dubbo
+        port:
+           20880
+        threads:
+           100
+
+
