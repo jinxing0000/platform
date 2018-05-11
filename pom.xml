@@ -12,7 +12,7 @@
         <module>sys-api</module>
         <module>sys-server</module>
         <module>sys-web</module>
-        <module>common</module>
+        <module>common-core</module>
     </modules>
 
     <!-- 第一步：添加Springboot的parent -->

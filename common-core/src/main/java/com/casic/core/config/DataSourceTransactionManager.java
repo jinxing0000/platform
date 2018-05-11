@@ -1,4 +1,4 @@
-package com.casic.sys.config;
+package com.casic.core.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
