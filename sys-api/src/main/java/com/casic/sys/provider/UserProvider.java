@@ -9,4 +9,10 @@ public interface UserProvider {
      * @return
      */
     UserEntity getUser(String userId);
+
+    /**
+     * 保存用户信息
+     * @param userEntity
+     */
+    void saveUser(UserEntity userEntity);
 }

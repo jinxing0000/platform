@@ -7,7 +7,8 @@ import java.io.Serializable;
 
 @Data
 public class UserEntity implements Serializable {
-    private String userId;
+    private String id;
     private String userName;
-    private String sex;
+    private String userSex;
+    private String password;
 }

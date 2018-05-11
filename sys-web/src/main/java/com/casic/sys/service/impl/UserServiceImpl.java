@@ -22,4 +22,9 @@ public class UserServiceImpl implements UserService {
         logger.debug("用户编号："+userId);
         return userProvider.getUser(userId);
     }
+
+    @Override
+    public void saveUser(UserEntity userEntity) {
+        userProvider.saveUser(userEntity);
+    }
 }

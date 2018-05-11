@@ -21,7 +21,6 @@ public class DataSourceContextHolder  {
      * 读可能是多个库
      */
     public static void read() {
-
         local.set(DataSourceType.read.getType());
     }
 
@@ -29,7 +28,6 @@ public class DataSourceContextHolder  {
      * 写只有一个库
      */
     public static void write() {
-        logger.debug("设置write库");
         local.set(DataSourceType.write.getType());
     }
 

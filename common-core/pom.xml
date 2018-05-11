@@ -47,11 +47,13 @@
             <artifactId>commons-codec</artifactId>
             <version>1.9</version>
         </dependency>
+        <!-- fastjson  -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
+        <!--  Mybatis分页查询插件  -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
