@@ -31,7 +31,7 @@ datasource:
   type: com.alibaba.druid.pool.DruidDataSource
 #主库
   write:
-    url: jdbc:mysql://192.168.1.99:3306/platform?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
+    url: jdbc:mysql://127.0.0.1:3306/platform?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -50,7 +50,7 @@ datasource:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
   read1:
-    url: jdbc:mysql://192.168.1.99:3306/platform?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
+    url: jdbc:mysql://127.0.0.1:3306/platform?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -69,7 +69,7 @@ datasource:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
   read2:
-    url: jdbc:mysql://192.168.1.99:3306/platform?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
+    url: jdbc:mysql://127.0.0.1:3306/platform?useUnicode=true&amp;characterEncoding=utf8&amp;emptyStringsConvertToZero=true
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
