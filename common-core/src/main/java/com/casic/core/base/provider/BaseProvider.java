@@ -1,5 +1,7 @@
 package com.casic.core.base.provider;
 
+import com.casic.core.base.entity.PageEntity;
+
 import java.util.List;
 import java.util.Map;
 
@@ -33,10 +35,10 @@ public interface BaseProvider<T> {
     T edit(T t);
     /**
      *  批量修改实体
-     * @param t
+     * @param list
      * @return
      */
-    int editBatch(T t);
+    int editBatch(List<T> list);
     /**
      *  删除数据（map参数,逻辑删除）
      * @param map
@@ -63,7 +65,7 @@ public interface BaseProvider<T> {
      * @param map
      * @return
      */
-    List<T> findListByPage(Map<String, Object> map);
+    PageEntity<T> findListByPage(Map<String, Object> map);
 
     /**
      * 按照参数查询数据
