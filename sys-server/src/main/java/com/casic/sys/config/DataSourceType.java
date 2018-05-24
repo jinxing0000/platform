@@ -1,4 +1,4 @@
-package com.casic.core.config;
+package com.casic.sys.config;
 
 public enum DataSourceType {
     read("read", "从库"),

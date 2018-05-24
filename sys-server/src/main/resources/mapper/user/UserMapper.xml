@@ -3,9 +3,9 @@
 
 <mapper namespace="com.casic.sys.mapper.UserMapper">
 
-	<insert id="insterUser" parameterType="com.casic.sys.entity.UserEntity">
-        insert into sys_user (id,user_name,user_sex,password)
-        values (#{id,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{userSex,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR})
+	<insert id="inster" parameterType="com.casic.sys.entity.UserEntity">
+        insert into sys_user (id,user_name,user_sex,password,create_date,create_user_id,modify_date,modify_user_id,delete_state)
+        values (#{id,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{userSex,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{creaateDate,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{modifyDate,jdbcType=VARCHAR},#{modifyUserId,jdbcType=VARCHAR},#{deleteState,jdbcType=VARCHAR})
     </insert>
 
     <select id="selectUser" resultType="com.casic.sys.entity.UserEntity" >

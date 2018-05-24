@@ -1,4 +1,4 @@
-package com.casic.core.config;
+package com.casic.sys.config;
 
 
 import com.github.pagehelper.PageHelper;
