@@ -18,12 +18,6 @@
             <artifactId>sys-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!--  common-core 依赖 -->
-        <dependency>
-            <groupId>com.casic</groupId>
-            <artifactId>common-core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
         <!--  jdbc依赖包  -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -12,6 +12,11 @@
     <artifactId>sys-api</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>com.casic</groupId>
+            <artifactId>common-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- 使用lombok实现JavaBean的get、set、toString、hashCode、equals等方法的自动生成  -->
         <dependency>
             <groupId>org.projectlombok</groupId>

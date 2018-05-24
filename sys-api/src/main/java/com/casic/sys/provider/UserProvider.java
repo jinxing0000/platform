@@ -1,18 +1,8 @@
 package com.casic.sys.provider;
 
+import com.casic.core.base.provider.BaseProvider;
 import com.casic.sys.entity.UserEntity;
 
-public interface UserProvider {
-    /**
-     * 查询用户信息
-     * @param userId
-     * @return
-     */
-    UserEntity getUser(String userId);
+public interface UserProvider extends BaseProvider<UserEntity> {
 
-    /**
-     * 保存用户信息
-     * @param userEntity
-     */
-    void saveUser(UserEntity userEntity);
 }

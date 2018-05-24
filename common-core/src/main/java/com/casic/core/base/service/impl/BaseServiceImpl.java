@@ -6,6 +6,7 @@ import com.casic.core.base.provider.BaseProvider;
 import com.casic.core.base.service.BaseService;
 import com.casic.core.utils.ConstantUtils;
 import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;

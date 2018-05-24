@@ -1,30 +1,34 @@
 package com.casic.sys.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.casic.core.base.service.impl.BaseServiceImpl;
 import com.casic.sys.entity.UserEntity;
 import com.casic.sys.provider.UserProvider;
 import com.casic.sys.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Component
-public class UserServiceImpl implements UserService {
+@Service
+public class UserServiceImpl extends BaseServiceImpl<UserProvider,UserEntity>  implements UserService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Reference
-    private UserProvider userProvider;
+    UserProvider userProvider;
 
-    @Override
-    public UserEntity getUser(String userId) {
-        logger.debug("用户编号："+userId);
-        return userProvider.getUser(userId);
+    //@Reference
+    @Autowired
+    public void setProvider(){
+        provider = userProvider;
+        logger.debug("执行赋值++++++++++++++++++++++++++++++++++++++++++");
     }
 
     @Override
-    public void saveUser(UserEntity userEntity) {
-        userProvider.saveUser(userEntity);
+    public String getUserName() {
+        //provider = userProvider;
+        logger.debug("执行赋值++++++++++++++++++++++++++++++++++++++++++");
+        return null;
     }
 }

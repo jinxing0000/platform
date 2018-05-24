@@ -1,12 +1,10 @@
 package com.casic.sys.entity;
 
+import com.casic.core.base.entity.BaseEntity;
 import lombok.Data;
-import lombok.Setter;
-
-import java.io.Serializable;
 
 @Data
-public class UserEntity implements Serializable {
+public class UserEntity extends BaseEntity {
     private String id;
     private String userName;
     private String userSex;

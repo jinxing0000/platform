@@ -6,6 +6,7 @@ import com.casic.core.base.mapper.BaseMapper;
 import com.casic.core.base.provider.BaseProvider;
 import com.casic.core.utils.ConstantUtils;
 import com.github.pagehelper.PageHelper;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.UUID;
  */
 public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T extends BaseEntity>  implements BaseProvider<T> {
 
-    protected  baseMapper provider;
+    protected  baseMapper mapper;
 
     /** 生成主键策略 */
     public String createId() {
@@ -30,11 +31,12 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
      * @param t
      */
     @Override
+    @Transactional
     public void save(T t){
         t.setId(createId());
         t.setCreateDate(new Date());
         t.setDeleteState(ConstantUtils.DELETE_STATE_NO);
-        provider.insert(t);
+        mapper.insert(t);
     }
 
     /**
@@ -42,12 +44,13 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
      * @param t
      */
     @Override
+    @Transactional
     public T saveEntity(T t){
         String id=createId();
-        t.setId(createId());
+        t.setId(id);
         t.setCreateDate(new Date());
         t.setDeleteState(ConstantUtils.DELETE_STATE_NO);
-        provider.insert(t);
+        mapper.insert(t);
         return findById(id);
     }
     /**
@@ -55,6 +58,7 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
      * @param list
      */
     @Override
+    @Transactional
     public void saveBatch(List<T> list){
         for(T t:list){
             String id=createId();
@@ -62,7 +66,7 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
             t.setCreateDate(new Date());
             t.setDeleteState(ConstantUtils.DELETE_STATE_NO);
         }
-        provider.insertBatch(list);
+        mapper.insertBatch(list);
     }
 
     /**
@@ -71,9 +75,10 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
      * @return
      */
     @Override
+    @Transactional
     public T edit(T t){
         t.setModifyDate(new Date());
-        provider.update(t);
+        mapper.update(t);
         return findById(t.getId());
     }
     /**
@@ -82,11 +87,12 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
      * @return
      */
     @Override
+    @Transactional
     public int editBatch(List<T> list){
         for(T t:list){
             t.setModifyDate(new Date());
         }
-        return provider.updateBatch(list);
+        return mapper.updateBatch(list);
     }
     /**
      *  删除数据（map参数,逻辑删除）
@@ -94,10 +100,11 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
      * @return
      */
     @Override
+    @Transactional
     public int delete(Map<String, Object> map){
         map.put("deleteState",ConstantUtils.DELETE_STATE_YES);
         map.put("modifyDate",new Date());
-        return provider.delete(map);
+        return mapper.delete(map);
     }
 
     /**
@@ -106,12 +113,13 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
      * @return
      */
     @Override
+    @Transactional
     public int deleteBatch(List<T> list){
         for(T t:list){
             t.setModifyDate(new Date());
             t.setDeleteState(ConstantUtils.DELETE_STATE_YES);
         }
-        return provider.deleteBatch(list);
+        return mapper.deleteBatch(list);
     }
 
     /**
@@ -121,7 +129,7 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
      */
     @Override
     public T findById(String id){
-        return provider.selectById(id);
+        return mapper.selectById(id);
     }
 
     /**
@@ -141,7 +149,7 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
         }
         params.put("deleteState",ConstantUtils.DELETE_STATE_NO);
         PageHelper.startPage(currentPage, pageSize);
-        List<T> list=provider.selectListByPage(params);
+        List<T> list=mapper.selectListByPage(params);
         return new PageEntity<T>(list);
     }
 
@@ -153,6 +161,6 @@ public abstract class BaseProviderImpl <baseMapper extends BaseMapper<T>, T exte
     @Override
     public List<T> findList(Map<String, Object> params){
         params.put("deleteState",ConstantUtils.DELETE_STATE_NO);
-        return provider.selectList(params);
+        return mapper.selectList(params);
     }
 }

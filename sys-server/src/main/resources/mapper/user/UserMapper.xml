@@ -3,16 +3,189 @@
 
 <mapper namespace="com.casic.sys.mapper.UserMapper">
 
-	<insert id="inster" parameterType="com.casic.sys.entity.UserEntity">
+    <sql id="baseSql">
+        a.id,
+        a.user_name,
+        a.user_sex,
+        a.password,
+        a.create_date,
+        a.create_user_id,
+        a.modify_date,
+        a.modify_user_id,
+        a.delete_state
+    </sql>
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.casic.sys.entity.UserEntity" id="BaseResultMap">
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userSex" column="user_sex" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+        <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
+        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+        <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId" />
+        <result column="delete_state" jdbcType="VARCHAR" property="deleteState" />
+    </resultMap>
+
+	<insert id="insert" parameterType="com.casic.sys.entity.UserEntity">
         insert into sys_user (id,user_name,user_sex,password,create_date,create_user_id,modify_date,modify_user_id,delete_state)
-        values (#{id,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{userSex,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{creaateDate,jdbcType=VARCHAR},#{createUserId,jdbcType=VARCHAR},#{modifyDate,jdbcType=VARCHAR},#{modifyUserId,jdbcType=VARCHAR},#{deleteState,jdbcType=VARCHAR})
+        values (#{id,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{userSex,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{createDate,jdbcType=TIMESTAMP},#{createUserId,jdbcType=VARCHAR},#{modifyDate,jdbcType=TIMESTAMP},#{modifyUserId,jdbcType=VARCHAR},#{deleteState,jdbcType=VARCHAR})
     </insert>
 
-    <select id="selectUser" resultType="com.casic.sys.entity.UserEntity" >
-        select id,user_name,user_sex,password
-        from sys_user
+    <select id="selectById" resultMap="BaseResultMap" >
+        select
+        <include refid="baseSql" />
+        from sys_user a
+        <where>
+            a.id= #{id,jdbcType=VARCHAR}
+        </where>
+    </select>
+
+    <update id="update" parameterType="com.casic.sys.entity.UserEntity">
+        update sys_user
+        <set>
+            <if test="userName != null">user_name= #{userName,jdbcType=VARCHAR},</if>
+            <if test="userSex != null">user_sex= #{userSex,jdbcType=VARCHAR},</if>
+            <if test="password != null">password= #{password,jdbcType=VARCHAR},</if>
+            <if test="modifyDate != null">modify_date= #{modifyDate,jdbcType=TIMESTAMP},</if>
+            <if test="modifyUserId != null">modify_user_id= #{modifyUserId,jdbcType=VARCHAR}</if>
+        </set>
         <where>
             id= #{id,jdbcType=VARCHAR}
         </where>
+    </update>
+
+    <update id="delete">
+        update sys_user
+        <set>
+            <if test="deleteState != null">user_name= #{deleteState,jdbcType=VARCHAR},</if>
+            <if test="modifyDate != null">modify_date= #{modifyDate,jdbcType=TIMESTAMP},</if>
+            <if test="modifyUserId!= null">modify_user_id= #{modifyUserId,jdbcType=VARCHAR}</if>
+        </set>
+        <where>
+            id= #{id,jdbcType=VARCHAR}
+        </where>
+    </update>
+
+    <select id="selectListByPage" resultMap="BaseResultMap">
+        select
+        <include refid="baseSql" />
+        from sys_user a
+        <where>
+            a.delete_state= #{deleteState,jdbcType=VARCHAR}
+        </where>
+        order by a.create_date desc
     </select>
+
+    <select id="selectList" resultMap="BaseResultMap">
+        select
+        <include refid="baseSql" />
+        from sys_user a
+        <where>
+            a.delete_state= #{deleteState,jdbcType=VARCHAR}
+        </where>
+        order by a.create_date desc
+    </select>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into sys_user (id,user_name,user_sex,password,create_date,create_user_id,modify_date,modify_user_id,delete_state)
+        SELECT A.*
+        FROM(
+        <foreach collection="list" item="item" index="index" separator="UNION ALL" >
+            SELECT
+            #{item.id,jdbcType=VARCHAR} as id,
+            #{item.userName,jdbcType=VARCHAR} as user_name,
+            #{item.userSex,jdbcType=VARCHAR} as user_sex,
+            #{item.password,jdbcType=VARCHAR} as password,
+            #{item.createDate,jdbcType=TIMESTAMP} as create_date,
+            #{item.createUserId,jdbcType=VARCHAR} as create_user_id,
+            #{item.modifyDate,jdbcType=TIMESTAMP} as modify_date,
+            #{item.modifyUserId,jdbcType=VARCHAR} as modify_user_id,
+            #{item.deleteState,jdbcType=VARCHAR} as delete_state
+            FROM dual
+        </foreach>
+        )A
+    </insert>
+
+    <update id="updateBatch" parameterType="java.util.List">
+        update sys_user
+        <trim prefix="set" suffixOverrides=",">
+            <!-- 拼接case when 这是另一种写法，这种写着更专业的感觉 -->
+            <trim prefix="user_name =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.userName!=null">
+                        when id=#{item.id} then #{item.userName}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="user_sex =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.userSex!=null">
+                        when id=#{item.id} then #{item.userSex}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="password =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.password!=null">
+                        when id=#{dept.id} then #{dept.password}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="modify_date =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.modifyDate!=null">
+                        when id=#{item.id} then #{item.modifyDate}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="modify_user_id =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.modifyUserId!=null">
+                        when id=#{item.id} then #{item.modifyUserId}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        <where>
+            <foreach collection="list" separator="or" item="item">
+                id = #{item.id}
+            </foreach>
+        </where>
+    </update>
+
+    <update id="deleteBatch" parameterType="java.util.List">
+        update sys_user
+        <trim prefix="set" suffixOverrides=",">
+            <!-- 拼接case when 这是另一种写法，这种写着更专业的感觉 -->
+            <trim prefix="delete_state =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.deleteState!=null">
+                        when id=#{item.id} then #{item.deleteState}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="modify_date =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.modifyDate!=null">
+                        when id=#{item.id} then #{item.modifyDate}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="modify_user_id =case" suffix="end,">
+                <foreach collection="list" item="item">
+                    <if test="item.modifyUserId!=null">
+                        when id=#{item.id} then #{item.modifyUserId}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        <where>
+            <foreach collection="list" separator="or" item="item">
+                id = #{item.id}
+            </foreach>
+        </where>
+    </update>
+
 </mapper>

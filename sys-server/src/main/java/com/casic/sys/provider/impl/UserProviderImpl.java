@@ -1,6 +1,7 @@
 package com.casic.sys.provider.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.casic.core.base.provider.impl.BaseProviderImpl;
 import com.casic.sys.entity.UserEntity;
 import com.casic.sys.mapper.UserMapper;
 import com.casic.sys.provider.UserProvider;
@@ -11,19 +12,9 @@ import java.util.UUID;
 
 @Service(interfaceClass = UserProvider.class)
 @Component
-public class UserProviderImpl implements UserProvider {
-
+public class UserProviderImpl  extends BaseProviderImpl<UserMapper,UserEntity> implements UserProvider {
     @Autowired
-    private UserMapper userMapper;
-
-    @Override
-    public UserEntity getUser(String userId) {
-        return userMapper.selectUser(userId);
-    }
-
-    @Override
-    public void saveUser(UserEntity userEntity) {
-        userEntity.setId(UUID.randomUUID().toString());
-        userMapper.insterUser(userEntity);
+    public void setMapper(UserMapper userMapper) {
+        this.mapper=userMapper;
     }
 }
