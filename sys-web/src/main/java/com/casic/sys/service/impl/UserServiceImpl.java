@@ -15,13 +15,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserProvider,UserEntity>  i
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Reference
-    UserProvider userProvider;
+//    @DubboReference
+//    private UserProvider userProvider;
 
-    //@Reference
-    @Autowired
-    public void setProvider(){
-        provider = userProvider;
+    @Reference
+    public void setProvider(UserProvider userProvider){
+        this.provider = userProvider;
         logger.debug("执行赋值++++++++++++++++++++++++++++++++++++++++++");
     }
 

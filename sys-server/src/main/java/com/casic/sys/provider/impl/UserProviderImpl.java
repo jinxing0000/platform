@@ -8,8 +8,6 @@ import com.casic.sys.provider.UserProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
 @Service(interfaceClass = UserProvider.class)
 @Component
 public class UserProviderImpl  extends BaseProviderImpl<UserMapper,UserEntity> implements UserProvider {
