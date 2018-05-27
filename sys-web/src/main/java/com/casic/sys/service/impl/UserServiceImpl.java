@@ -10,24 +10,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserProvider,UserEntity>  implements UserService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-//    @DubboReference
-//    private UserProvider userProvider;
-
     @Reference
-    public void setProvider(UserProvider userProvider){
-        this.provider = userProvider;
-        logger.debug("执行赋值++++++++++++++++++++++++++++++++++++++++++");
+    private UserProvider userProvider;
+
+    @PostConstruct
+    public void init(){
+        logger.debug("初始化执行++++");
+        this.provider=userProvider;
     }
 
     @Override
     public String getUserName() {
-        //provider = userProvider;
-        logger.debug("执行赋值++++++++++++++++++++++++++++++++++++++++++");
         return null;
     }
 }

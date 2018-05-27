@@ -23,6 +23,10 @@ spring:
            20880
         threads:
            100
+     scan:
+         com.casic
+     packageName:
+         com.casic.sys.
 #多数据源 1主2从
 datasource:
  #从库数量

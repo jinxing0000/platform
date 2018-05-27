@@ -29,6 +29,7 @@ public class UserController {
 
     @RequestMapping(value = "editUser", method = RequestMethod.PUT, produces = "application/json; charset=UTF-8")
     public UserEntity editUser(@RequestBody UserEntity userEntity){
+
         return userService.edit(userEntity);
     }
 

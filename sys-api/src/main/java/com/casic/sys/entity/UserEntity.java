@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class UserEntity extends BaseEntity {
-    private String id;
     private String userName;
     private String userSex;
     private String password;

@@ -59,7 +59,7 @@
     <update id="delete">
         update sys_user
         <set>
-            <if test="deleteState != null">user_name= #{deleteState,jdbcType=VARCHAR},</if>
+            <if test="deleteState != null">delete_state= #{deleteState,jdbcType=VARCHAR},</if>
             <if test="modifyDate != null">modify_date= #{modifyDate,jdbcType=TIMESTAMP},</if>
             <if test="modifyUserId!= null">modify_user_id= #{modifyUserId,jdbcType=VARCHAR}</if>
         </set>
