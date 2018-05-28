@@ -3,6 +3,10 @@
 
 <mapper namespace="com.casic.sys.mapper.UserMapper">
 
+
+    <!-- 开启基于redis的二级缓存 -->
+    <cache type="com.casic.sys.config.RedisCache" />
+
     <sql id="baseSql">
         a.id,
         a.user_name,
